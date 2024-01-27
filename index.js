@@ -49,12 +49,16 @@ const addProduct = async (req, res) => {
 
 // Update product data in db.json
 const editProduct = async (req, res, taskId) => {
+  console.log("Received PUT request for product ID:", taskId);
+
   try {
     let body = "";
     req.on("data", (chunk) => {
       body += chunk;
     });
     req.on("end", () => {
+      console.log("Received data for update:", body);
+
       const updatedProduct = JSON.parse(body);
       // Read existing data from db.json
       const rawData = fs.readFileSync("db.json");
@@ -70,6 +74,7 @@ const editProduct = async (req, res, taskId) => {
         products[productIndex] = updatedProduct;
         // Write the updated data back to db.json
         fs.writeFileSync("db.json", JSON.stringify(products));
+        console.log("Product updated successfully");
 
         // Send a success response
         res.writeHead(200, { "Content-Type": "application/json" });
