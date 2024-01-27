@@ -5,4 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/w11p2p/",
   plugins: [react()],
+  server: {
+    proxy: {
+      "/pets": "http://localhost:2000",
+    },
+  },
 });
